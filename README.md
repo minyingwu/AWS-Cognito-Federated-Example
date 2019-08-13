@@ -1,0 +1,1 @@
+# aws_cognito_federated_exmaple

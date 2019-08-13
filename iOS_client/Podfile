@@ -1,0 +1,25 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '10.0'
+
+target 'TestLambda' do
+  # Comment the next line if you don't want to use dynamic frameworks
+   use_frameworks!
+   $awsVersion = '~> 2.9.0'
+
+   pod 'AWSAPIGateway', $awsVersion
+   pod 'AWSCore', $awsVersion
+   pod 'AWSCognitoIdentityProvider', $awsVersion
+   
+   pod 'FacebookCore', '~> 0.6.0'
+   pod 'FacebookLogin', '~> 0.6.0'
+   pod 'FacebookShare', '~> 0.6.0'
+
+   pod 'GoogleSignIn'
+  # Pods for TestLambda
+
+  target 'TestLambdaTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

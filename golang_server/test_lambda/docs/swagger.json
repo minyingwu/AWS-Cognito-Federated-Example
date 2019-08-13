@@ -1,0 +1,135 @@
+{
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "title": "TestLambdaAPI2",
+        "contact": {},
+        "license": {},
+        "version": "2019-07-27T07:37:05Z"
+    },
+    "host": "[YOUR HOST]",
+    "basePath": "/dev",
+    "paths": {
+        "/login": {
+            "get": {
+                "security": [
+                    {
+                        "sigv4": []
+                    }
+                ],
+                "description": "login to sync current aws id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/db.U"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "security": [
+                    {
+                        "sigv4": []
+                    }
+                ],
+                "description": "query user data by aws_id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/db.U"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "sigv4": []
+                    }
+                ],
+                "description": "create new user data",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/db.U"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "sigv4": []
+                    }
+                ],
+                "description": "delete user by aws_id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/db.U"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "sigv4": []
+                    }
+                ],
+                "description": "update user data",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/db.U"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "db.U": {
+            "type": "object",
+            "properties": {
+                "aws_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "sigv4": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

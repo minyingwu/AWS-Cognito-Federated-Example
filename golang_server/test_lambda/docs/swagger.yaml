@@ -1,0 +1,81 @@
+basePath: /dev
+definitions:
+  db.U:
+    properties:
+      aws_id:
+        type: string
+      name:
+        type: string
+    type: object
+host: [YOUR HOST]
+info:
+  contact: {}
+  license: {}
+  title: TestLambdaAPI2
+  version: "2019-07-27T07:37:05Z"
+paths:
+  /login:
+    get:
+      description: login to sync current aws id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 200 response
+          schema:
+            $ref: '#/definitions/db.U'
+      security:
+      - sigv4: []
+  /user:
+    delete:
+      description: delete user by aws_id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 200 response
+          schema:
+            $ref: '#/definitions/db.U'
+      security:
+      - sigv4: []
+    get:
+      description: query user data by aws_id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 200 response
+          schema:
+            $ref: '#/definitions/db.U'
+      security:
+      - sigv4: []
+    patch:
+      description: update user data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 200 response
+          schema:
+            $ref: '#/definitions/db.U'
+      security:
+      - sigv4: []
+    post:
+      description: create new user data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 200 response
+          schema:
+            $ref: '#/definitions/db.U'
+      security:
+      - sigv4: []
+schemes:
+- https
+securityDefinitions:
+  sigv4:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
