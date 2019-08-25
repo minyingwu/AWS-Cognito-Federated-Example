@@ -1,10 +1,10 @@
 # aws_cognito_federated_exmaple
 
 This example code will help the beginners in SaaS on AWS development.   
-You could follow the source code and this article to create a simple system including frontend iOS app and AWS backend. 
+You could follow the source code and this article to create a simple system including the frontend iOS app and AWS backend. 
 
-In client side, the iOS app import AWS SDK to handle API from server, and integrate third-party login service.  
-In server side, we use Amazon Cognito Federated Identities to manage the login account(including Facebook and Google), Lambda and API Gateway provide RESTful API to client side, and access the user data in DynamoDB.  
+In the client-side, the iOS app import AWS SDK to handle API from the server, and integrate third-party login service.  
+In the server-side, we use Amazon Cognito Federated Identities to manage the login account(including Facebook and Google), Lambda and API Gateway provide RESTful API to the client-side, and access the user data in DynamoDB.  
 
 ## Contents
 - [Learn](#learn)
@@ -22,11 +22,11 @@ iOS APP:
 
 Golang backend:  
 You need to deploy these service on AWS to finish the example. 
-- Amazon Cognito Federated Identities
-- IAM(Setup by AWS platform or CLI)
+- [Amazon Cognito Federated Identities](#cognito_federated)
+- [IAM](#iam)
 - [Lambda(Golang)](#lambda)
-- API Gateway
-- DynamoDB
+- [API Gateway](#api_gateway)
+- [DynamoDB](#dynamodb)
 
 ## Requirements
 
@@ -66,7 +66,7 @@ fbLoginManager.logIn(readPermissions: [.publicProfile, .email], viewController: 
 }
 ```
 ### Google_Login
-Reference: [Google Developer Website](https://developers.facebook.com/docs/swift/getting-started)
+Reference: [Google Developer Website](https://developers.google.com/identity/sign-in/ios)
 
 #### MainViewController.swift
 After login the Google account, we need to call syncLogin as above.
@@ -112,9 +112,9 @@ func setConfiguration() {
 }
 ```
 
-Most important part!  
-This delegate will automatic trigger logins() function when token not found or expired on AWS IAM.  
-Therefore, in our system the authorization in API is IAM, we don't need to bring token in header field.  
+The most important part!  
+This delegate will automatically trigger logins() function when token not found or expired on AWS IAM.  
+Therefore, in our system the authorization in API is IAM, we don't need to bring token in the header field.  
 
 ```swift
 class ThirdPartyLoginProvider: NSObject, AWSIdentityProviderManager {
@@ -141,11 +141,36 @@ After function trigger return AWSTask, you can get the current logged in aws id.
 ```swift
 let aws_id = APISession.shared.credentialsProvider.identityId ?? ""
 ```
+### Cognito_Federated
+After you create a new identity pool, you can edit the identity pool like the following image.  
+![drawing](./image/cognito_auth.png)
+
+Select the drop-down menu to choose or create an unauthenticated/authenticated role in IAM.    
+You must add two actions to allow this IAM can support to invoke Lambda and execute API Gateway.  
+The IAM example for Cognito Auth show as below.   
+![drawing](./image/auth_iam.png)
+
+
+### IAM
+You would see the IAM tutorials in Cognito Federated, Lambda and Dynamodb sections.
+
 
 ### Lambda
+Create your testing function in Lambda, and set up the configuration as below.  
+![drawing](./image/lambda_creation.png)
 
+In the permissions column, you would create the IAM for the Lambda function.  
+AWSLambdaExecute is the default policy for lambda IAM.   
+Then we can create the other inline policy for invoking Lambda.  
+![drawing](./image/lambda_iam_apigateway.png)
+
+After creating the Lambda function, we could upload your backend codes.  
+Run the [build.sh](golang_server/test_lambda/build.sh) file to produce the go binary file.  
+
+
+Some tutorials codes show as below.  
 #### router.go
-In order to support AWS Lambda in Gin, we use this [reference]("github.com/apex/gateway") to overwrite default Gin Run.
+In order to support AWS Lambda in Gin, we use this [reference]("https://github.com/apex/gateway") to overwrite default Gin Run.
 ```go
 func RunServer() {
 	// AWS server
@@ -169,6 +194,25 @@ func CreateUser(c *gin.Context) {
 	......
 }
 ```
+
+### API_Gateway
+In this part, we show you an important thing to help you set up the authorization.
+First, we create different methods in resources, and after that choosing the method execution to set your API authorization is AWS_IAM.
+![drawing](./image/apigateway_auth.png)
+
+Finally, when we invoke the API from the client-side, AWS IAM will help you to check the authorization is correct or not.  
+
+
+### Dynamodb
+Using the Dynamodb for your backend database, you can create the DB table on AWS dashboard.  
+And then, choosing the overview section to see the table details, and copy your table ARN.  
+![drawing](./image/dynamodb_creation.png)
+
+Select your created Lambda IAM, and add a new inline policy to IAM.  
+There are lots of Dynamodb actions you could choose on AWS, selecting the actions you need to control the DB.  
+![drawing](./image/lambda_iam_db.png)
+
+
 
 ## Author
 
