@@ -170,7 +170,7 @@ Run the [build.sh](golang_server/test_lambda/build.sh) file to produce the go bi
 
 Some tutorials codes show as below.  
 #### router.go
-In order to support AWS Lambda in Gin, we use this [reference]("https://github.com/apex/gateway") to overwrite default Gin Run.
+In order to support AWS Lambda in Gin, we use this [reference](https://github.com/apex/gateway) to overwrite default Gin Run.
 ```go
 func RunServer() {
 	// AWS server
@@ -221,10 +221,5 @@ minyingwu, minyingwu123@gmail.com
 ## License
 
 aws_cognito_federated_exmaple is available under the MIT license. See the LICENSE file for more info.
-
-
-
-
-
 
 
