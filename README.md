@@ -143,6 +143,7 @@ let aws_id = APISession.shared.credentialsProvider.identityId ?? ""
 ```
 ### Cognito_Federated
 After you create a new identity pool, you can edit the identity pool like the following image.  
+Select the authentication providers(Facebook and Gmail are examples) you want, and refer to the developer guide to fill in the forms.
 ![drawing](./image/cognito_auth.png)
 
 Select the drop-down menu to choose or create an unauthenticated/authenticated role in IAM.    
